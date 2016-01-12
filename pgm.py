@@ -1,20 +1,14 @@
-#!/usr/bin/python3
-
 import minimalmodbus
 import serial
 import time
-import logging
-import sys
 
-add = 8
+add = 10
 
 if __name__ == '__main__':
 	while True:
 		try:
-			add += 1
-
-			if add == 13:
-				add = 9
+			if add == 14:
+				add = 10
 				print "\n",
 			
 			instrument = minimalmodbus.Instrument('/dev/ttyS0',2)
@@ -39,7 +33,7 @@ if __name__ == '__main__':
 				#break
 			
 			time.sleep(0.1)
-
+			add += 1
 		except serial.SerialException :
 			print('\nProgram aborted because there is error in opening the serial port.\n' )
 
