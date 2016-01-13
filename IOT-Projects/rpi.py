@@ -34,8 +34,9 @@ class worker(threading.Thread):
 	def run(self):
 
 		self.con_to_broker()
-		value = [] 
+		value = []
 		while not stopThread.isSet():
+			value = []								# Delete all elements in a list
 			value.append(plc.readRegister(0))
 			print value
 			client.publish("wa/node1",str(value),1)		# Echo to node2
