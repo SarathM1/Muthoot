@@ -4,7 +4,7 @@ import time
 
 start_addr = 0
 end_addr = 9
-add = start_addr
+addr = start_addr
 
 
 plc = minimalmodbus.Instrument('/dev/ttyS0',2)
@@ -17,23 +17,23 @@ plc.serial.timeout = 0.1
 plc.mode = minimalmodbus.MODE_ASCII
 while True:
 	try:
-		if add == (end_addr+1):
-			add = start_addr
+		if addr == (end_addr+1):
+			addr = start_addr
 			print "\n",
 		
 		try:
-			value = plc.read_register(add,signed=True)
+			value = plc.read_register(addr,signed=True)
 			
 			plc.write_register(1, -100, signed=True)
 		except Exception, e:
-			print e,add
+			print e,addr
 
 		else:
-			print add,'=',value,'|',
+			print addr,'=',value,'|',
 			#break
 		
 		#time.sleep(0.1)
-		add += 1
+		addr += 1
 	except serial.SerialException :
 		print('\nProgram aborted because there is error in opening the serial port.\n' )
 
