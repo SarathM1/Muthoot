@@ -4,22 +4,19 @@ import time
 
 add = 0
 
-#if __name__ == '__main__':
+plc = minimalmodbus.Instrument('/dev/ttyS0',2)
+#plc.debug = True
+plc.serial.baudrate = 9600
+plc.serial.bytesize = 7
+plc.serial.parity = serial.PARITY_EVEN
+plc.serial.stopbits = 1
+plc.serial.timeout = 0.1
+plc.mode = minimalmodbus.MODE_ASCII
 while True:
 	try:
-		if add == 2:
+		if add == 10:
 			add = 0
 			print "\n",
-		
-		plc = minimalmodbus.Instrument('/dev/ttyS0',2)
-		#plc.debug = True
-		plc.serial.baudrate = 9600
-		plc.serial.bytesize = 7
-		plc.serial.parity = serial.PARITY_EVEN
-		plc.serial.stopbits = 1
-		plc.serial.timeout = 0.1
-		plc.mode = minimalmodbus.MODE_ASCII
-
 		
 		try:
 			value = plc.read_register(add,signed=True)
