@@ -3,7 +3,7 @@ import serial
 import time
 
 start_addr = 0
-end_addr = 9
+end_addr = 20
 addr = start_addr
 
 
