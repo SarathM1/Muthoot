@@ -26,7 +26,12 @@ class worker(threading.Thread):
 	def con_to_broker(self):
 		client.on_connect 	= on_connect
 		client.on_disconnect = on_disconnect
-		client.connect(broker,1883,60)
+
+		try:
+			client.connect(broker,1883,60)
+		except Exception, e:
+			print 'con_to_broker:',e
+		
 
 		client.loop_start()
 
