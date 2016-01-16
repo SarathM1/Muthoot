@@ -1,7 +1,7 @@
 port = '/dev/ttyS0'
 slave_addr = 2
 
-broker = "192.168.1.10"
+broker = "192.168.1.13"
 #broker = "test.mosquitto.org"
 
 #Database
