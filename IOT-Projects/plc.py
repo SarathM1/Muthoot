@@ -16,7 +16,7 @@ class PLC(object):
 		self.plc.serial.timeout = 0.1
 		self.plc.mode = minimalmodbus.MODE_ASCII
 	
-	def dummyPacket():
+	def dummyPacket(self):
 		mode = ['Auto','Manual']
 		status=['Off','On']
 		val = {}
@@ -44,10 +44,10 @@ class PLC(object):
 
 		return val
 
-	def readRegister(self,addr):
+	def readRegister(self):
 		mode = ['Auto','Manual']
 		status=['Off','On']
-
+		val = {}
 		try:
 			val['time']				= time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
 			val['mode']				= self.plc.read_register(0)
@@ -69,7 +69,7 @@ class PLC(object):
 			val['dg2_hours']		= self.plc.read_register(16)
 			val['breaker3_status']	= self.plc.read_register(17)
 		except Exception, e:
-			val = dummyPacket()
+			val = self.dummyPacket()
 			print "readRegister: ",e
 		
 		return val

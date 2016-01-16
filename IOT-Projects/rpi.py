@@ -41,9 +41,8 @@ class worker(threading.Thread):
 		self.con_to_broker()
 		value = []
 		while not stopThread.isSet():
-			value = []								# Delete all elements in a list
-			value.append(plc.readRegister(0))
-			print value
+			packet = self.makePacket(plc.readRegister())								# Delete all elements in a list
+			print packet
 			client.publish("wa/node1",str(value),1)		# Echo to node2
 			time.sleep(1)
 
@@ -53,6 +52,28 @@ class worker(threading.Thread):
 		threading.Thread.join(self,timeout)
 		print "\n\t\tKilled thread !!"
 	
+	def makePacket(self,val):
+		packet = str(val['time'])\
+			+ ';' + str(val['mode'])\
+			+ ';' + str(val['mains_status'])\
+			+ ';' + str(val['mains_voltage'])\
+			+ ';' + str(val['mains_load'])\
+			+ ';' + str(val['breaker1_status'])\
+			+ ';' + str(val['dg1_status'])\
+			+ ';' + str(val['dg1_alarm'])\
+			+ ';' + str(val['dg1_voltage'])\
+			+ ';' + str(val['dg1_load'])\
+			+ ';' + str(val['dg1_hours'])\
+			+ ';' + str(val['breaker2_status'])\
+			+ ';' + str(val['bus_coupler_status'])\
+			+ ';' + str(val['dg2_status'])\
+			+ ';' + str(val['dg2_alarm'])\
+			+ ';' + str(val['dg2_voltage'])\
+			+ ';' + str(val['dg2_load'])\
+			+ ';' + str(val['dg2_hours'])\
+			+ ';' + str(val['breaker3_status'])\
+
+		return packet
 
 
 def main():
