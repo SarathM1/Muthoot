@@ -7,7 +7,9 @@
     mysql_select_db($database_connection,$connection) or die( mysql_error("could not connect to database! " ) ) ; 
 ?>
 
-<?php $display ="select * from db order by time desc limit 1"; 
+<?php 
+    $dredger_name = 'dredger1';
+    $display = sprintf("select * from db where dredger_name='%s' order by time desc limit 1",mysql_real_escape_string($dredger_name)); 
     $result=mysql_query($display,$connection) or die(mysql_error()); 
     if($result == FALSE) 
       { die(mysql_error()); }
