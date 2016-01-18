@@ -39,11 +39,10 @@ class worker(threading.Thread):
 	def run(self):
 
 		self.con_to_broker()
-		value = []
 		while not stopThread.isSet():
 			packet = self.makePacket(plc.readRegister())								# Delete all elements in a list
 			print packet
-			client.publish("wa/node1",str(value),1)		# Echo to node2
+			client.publish("wa/node1",packet,1)		# Echo to node2
 			time.sleep(1)
 
 	def join(self,timeout = None):
