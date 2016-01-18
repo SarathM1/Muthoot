@@ -1,15 +1,19 @@
 import paho.mqtt.client as mqtt
 import time
 from config import *
+from database import db
 
 client=mqtt.Client()
+db_obj = db('muthoot')
+
 def on_connect(client,userdata,rc):
 	print "\nNode Connected to broker. rc=%d\n\n" %(rc)
 	client.subscribe("wa/node1")
 
 def on_message(client,userdata,msg):
-	global prev_light_status
-	print msg.payload
+	data = msg.payload
+	data = db_obj.parseData(data)
+	print data
 
 def on_disconnect(client,userdata,rc):
 	print "Disconnected..rc=%d" %(rc)
