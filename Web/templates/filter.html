@@ -1,5 +1,5 @@
 
-{% extends "dredger2/base.html" %}
+{% extends "base2.html" %}
 {% block title %}Filter{% endblock %}
 
 {% block styles %}
@@ -34,7 +34,9 @@ tbody {
 
 
 </style>
+
 <link href="{{url_for('.static', filename='/css/bootstrap-combined.min.css')}}" rel="stylesheet">
+
 {% endblock %}
 
 {% block scripts %}
@@ -100,7 +102,7 @@ tbody {
             size:'normal',
             pageUrl: function(type, page, current){
 
-                return "/dredger2/filter/"+page+"?fromTime={{fromTime}}&toTime={{toTime}}";
+                return "/filter/"+page+"?fromTime={{fromTime}}&toTime={{toTime}}";
 
             }
 
@@ -114,7 +116,6 @@ tbody {
     
 {% endblock scripts %}
 
-
 {% block navbar %}
    
 
@@ -122,42 +123,36 @@ tbody {
     <nav class="navbar navbar-inverse navbar-fixed-top" >
       <div class="container">
         
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="/select"><p><img width="20" height="20" src="{{ url_for('static', filename='/img/favicon.ico') }}"> Dredger</p></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Select
-            <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="/dredger1/home">Dredger 1</a></li>
-              <li class="active"><a href="/dredger2/home">Dredger 2</a></li>
-            </ul>
-          </li>
-
-            <li><a href="/dredger2/home">Home</a></li>
-            <li class="active"><a href="/dredger2/filter">Filter</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                
-                <a class="navbar-brand" href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                
-                </li>
-            </ul>
-        </div>
-        
+        {% if current_user.is_authenticated()%}     <!--To hide navbar contents on login page-->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="/select"><p><img width="20" height="20" src="{{ url_for('static', filename='/img/favicon.ico') }}"> Dredger</p></a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              
+              <li><a href="/home">Home</a></li>
+              <li class="active"><a href="/filter">Filter</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+	              
+	                <li>
+	               	 	<a class="navbar-brand" href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+	                </li>
+	            </ul>
+              
+          </div>
+        {% endif %}
       </div>
     </nav>
 
  
 {% endblock %}
+
 
 {% block page_content %}
 
@@ -169,7 +164,7 @@ tbody {
   {% if results==None or results.page==1%} 
   
       <div class="page-header">
-        <h2 style="color:white;">Dredger 2: Filter</h2>
+        <h2 style="color:white;">Dredger 1: Filter</h2>
       </div>
     
       {% for message in get_flashed_messages() %}
@@ -307,9 +302,10 @@ and results.pages > 1
 
   <div class="container">
     <div class="table-responsive">
-      <table class="table">
+      <table class="table ">
         <thead>
           <tr>
+            
             <td>
                  <input type="checkbox" checked="checked" />#
              </td>
@@ -349,30 +345,30 @@ and results.pages > 1
           </tr>
 
         </thead>
-      </table>
-      
-      <table class="table table-hover table-bordered">
+        </table>
+
+        <table class="table table-hover table-bordered" style="text-align:center; vertical-align:middle;">
         <tbody>
-          <tr id="style1">
-             <td >#</td>
+          <tr  id="style1">
+             <td>#</td>
              <td >Time</td>
-             <td >Storage tank level</td>
-             <td >Storage tank cap</td>
-             <td >Service tank level</td>
-             <td >Service tank cap</td>
-             <td >Flowmeter 1 in</td>
-             <td >Flowmeter 1 out</td>
-             <td >Engine 1 status</td>
-             <td >Flowmeter 2 in</td>
-             <td >Flowmeter 2 out</td>
-             <td >Engine 2 status</td>
+             <td>Storage tank level</td>
+             <td>Storage tank cap</td>
+             <td>Service tank level</td>
+             <td>Service tank cap</td>
+             <td>Flowmeter 1 in</td>
+             <td>Flowmeter 1 out</td>
+             <td>Engine 1 status</td>
+             <td>Flowmeter 2 in</td>
+             <td>Flowmeter 2 out</td>
+             <td>Engine 2 status</td>
           </tr>
 
       {%if results != None%}
           {% set cntr = 1 %}
           
           {% for result in results.items %}
-        
+       
           <tr>
             <td >
 
@@ -380,25 +376,18 @@ and results.pages > 1
 
             </td>
             
-            <td  class="test" href="#" data-toggle="tooltip" data-placement="top" title="Time" data-container="body">
+            <td  class="test" href="#" data-toggle="tooltip" data-placement="top" title="Time"data-container="body" >
 
               {{ result.time }}
             
             </td>
 
-            {% if result.storage_tank_level>600%}
-              <td class="test" href="#" data-toggle="tooltip" data-placement="top" title="Storage Tank Level" data-container="body" style="color:rgb(184,0,0);">
-                
-                {{ result.storage_tank_level}}
+            <td class="test" href="#" data-toggle="tooltip" data-placement="top" title="Storage Tank Level" data-container="body">
+              
+              {{ result.storage_tank_level}}
 
-              </td>
-            {% else %}
-              <td class="test" href="#" data-toggle="tooltip" data-placement="top" title="Storage Tank Level" data-container="body" >
-                
-                {{ result.storage_tank_level}}
+            </td>
 
-              </td>
-            {% endif%}
             <td class="test" href="#" data-toggle="tooltip" data-placement="top" title="Storage Tank Cap" data-container="body">
 
               {{ result.storage_tank_cap}}
@@ -452,7 +441,6 @@ and results.pages > 1
             </td>
 
           </tr>
-
           {% set cntr = cntr+1 %}
           {% endfor %}
       {% endif %}
