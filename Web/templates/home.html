@@ -9,7 +9,7 @@
 		$(document).ready(function(){
 			var number=10;
 			var name= 'dummyNoUse';
-			$.post("{{ url_for('static', filename='ajax/dredger1/fetch_from_db.php') }}",{name:name},function(data){
+			$.post("{{ url_for('static', filename='ajax/fetch_from_db.php') }}",{name:name},function(data){
 			$('span#time').text(data.time);
 		    $('span#storage_tank_level').text(data.storage_tank_level);
 		    $('span#storage_tank_cap').text(data.storage_tank_cap);
@@ -39,7 +39,7 @@
 				if(number<=0)
 				{
 					var name= 'dummyNoUse';
-					$.post("{{ url_for('static', filename='ajax/dredger1/fetch_from_db.php') }}",{name:name},function(data){
+					$.post("{{ url_for('static', filename='ajax/fetch_from_db.php') }}",{name:name},function(data){
 					$('span#time').text(data.time);
 				    $('span#storage_tank_level').text(data.storage_tank_level);
 				    $('span#storage_tank_cap').text(data.storage_tank_cap);

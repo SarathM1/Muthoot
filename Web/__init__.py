@@ -174,7 +174,6 @@ def home():
 
 @login_required
 def filter(page=1,fromTime=None,toTime=None):
-
     
     dbObj=database()
     if request.method == 'POST':
