@@ -7,4 +7,4 @@ broker = "192.168.1.13"
 #Database
 db_host='127.0.0.1'
 db_user='root'
-db_passwd='aaggss'
+db_passwd=''

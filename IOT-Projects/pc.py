@@ -13,7 +13,8 @@ def on_connect(client,userdata,rc):
 def on_message(client,userdata,msg):
 	data = msg.payload
 	data = db_obj.parseData(data)
-	print data
+	db_obj.insert(data)
+	print 'Packet recvd; Time: ',data['time']
 
 def on_disconnect(client,userdata,rc):
 	print "Disconnected..rc=%d" %(rc)
