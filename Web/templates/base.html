@@ -1,0 +1,30 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+	<link rel="stylesheet"
+	      href="{{url_for('.static', filename='/css/bg.css')}}">
+	{{super()}}
+
+	<link rel="shortcut icon" href="{{ url_for('static', filename='/img/favicon.ico') }}">
+	<style type="text/css"></style>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+<div class="container">
+    <br/><br/><br/>
+    
+    
+    
+
+
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
+
+
